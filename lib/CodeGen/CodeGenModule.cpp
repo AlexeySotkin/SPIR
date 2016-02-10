@@ -2147,12 +2147,7 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D) {
   if (D->hasAttr<AnnotateAttr>())
     AddGlobalAnnotations(D, GV);
 
-  if (LangOpts.OpenCL && D->getType()->isBlockPointerType()) {
-    GV->eraseFromParent();
-    OCLGlobalBlockFunctions[D] = Init;
-    return;
-  } else
-    GV->setInitializer(Init);
+  GV->setInitializer(Init);
 
   // If it is safe to mark the global 'constant', do so now.
   GV->setConstant(!NeedsGlobalCtor && !NeedsGlobalDtor &&

@@ -11,7 +11,6 @@ set(LLVM_LINK_COMPONENTS
   ObjCARCOpts
   ProfileData
   ScalarOpts
-  SPIRVlib
   Support
   Target
   TransformUtils

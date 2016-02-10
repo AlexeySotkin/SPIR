@@ -589,10 +589,6 @@ llvm::Type *CodeGenTypes::ConvertType(QualType T) {
   }
 
   case Type::BlockPointer: {
-    if (Context.getLangOpts().OpenCL) {
-      ResultType = CGM.getOpenCLRuntime().getBlockType();
-      break;
-    }
     const QualType FTy = cast<BlockPointerType>(Ty)->getPointeeType();
     llvm::Type *PointeeType = ConvertTypeForMem(FTy);
     unsigned AS = Context.getTargetAddressSpace(FTy);
