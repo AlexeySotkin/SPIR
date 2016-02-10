@@ -1880,7 +1880,9 @@ void CXXNameMangler::mangleType(QualType T) {
   Qualifiers quals = split.Quals;
   const Type *ty = split.Ty;
 
-  bool isSubstitutable = isTypeSubstitutable(quals, ty);
+  bool isSubstitutable =
+      isTypeSubstitutable(quals, ty) &&
+      !(Context.getASTContext().getLangOpts().OpenCL && isa<ExtVectorType>(T));
   if (isSubstitutable && mangleSubstitution(T))
     return;
 
@@ -2004,8 +2006,8 @@ void CXXNameMangler::mangleType(const BuiltinType *T) {
   case BuiltinType::OCLSampler: Out << "11ocl_sampler"; break;
   case BuiltinType::OCLEvent: Out << "9ocl_event"; break;
   case BuiltinType::OCLQueue: Out << "9ocl_queue"; break;
-  case BuiltinType::OCLCLKEvent: Out << "13ocl_clk_event"; break;
-  case BuiltinType::OCLReserveId: Out << "15ocl_rewserve_id"; break;
+  case BuiltinType::OCLCLKEvent: Out << "12ocl_clkevent"; break;
+  case BuiltinType::OCLReserveId: Out << "13ocl_reserveid"; break;
   }
 }
 
